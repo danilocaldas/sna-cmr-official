@@ -23,8 +23,8 @@ public class TesteProcedimento {
          Procedimento procedimento2 = new Procedimento();
          procedimento2.setNome("RADIO");
          procedimento2.setCodigo(3248763);
-         procedimento2.setId(1);
-//         pi.save(procedimento2);
+         //procedimento2.setId(1);
+         pi.save(procedimento2);
 //         pi.update(procedimento2);
 //         pi.delete(procedimento2);
      }
