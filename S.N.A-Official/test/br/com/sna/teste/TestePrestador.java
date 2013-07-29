@@ -29,7 +29,7 @@ public class TestePrestador {
          prestador3.setId(6);
          
          PrestadorImplements pi = new PrestadorImplements();
-        // pi.save(prestador);
+         pi.save(prestador);
         // pi.save(prestador2);
         // pi.update(prestador3);
         // pi.delete(prestador3);

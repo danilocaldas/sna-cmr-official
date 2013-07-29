@@ -18,7 +18,7 @@ public class TesteFuncionario {
          funcionario.setSenha("dan1501");
          
          FuncionarioImplements pi = new FuncionarioImplements();
-         //pi.save(funcionario);
+         pi.save(funcionario);
          
          Funcionario funcionario4 = new Funcionario();
          //funcionario4.setNome("Joana Evangelista");
