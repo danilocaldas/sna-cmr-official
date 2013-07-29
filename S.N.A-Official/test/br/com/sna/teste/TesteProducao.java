@@ -4,6 +4,8 @@
  */
 package br.com.sna.teste;
 
+import br.com.sna.model.Producao;
+
 /**
  *
  * @author Danilo
@@ -11,6 +13,6 @@ package br.com.sna.teste;
 public class TesteProducao {
 
     public static void main(String[] args) {
-    
+        Producao producao = new Producao("HAM", "", "", "", "", Integer.MIN_VALUE);
     }
 }

@@ -13,19 +13,19 @@ public class Arquivo {
     private String ano;
     private String mes;
     private String cor;
-    private String prestador;
-    private String procedimento;
+    private String prestador_nome;
+    private String procedimento_nome;
 
     public Arquivo() {
     }
 
-    public Arquivo(Integer numero, String ano, String mes, String cor, String prestador, String procedimento) {
+    public Arquivo(Integer numero, String ano, String mes, String cor, String prestador_nome, String procedimento_nome) {
         this.numero = numero;
         this.ano = ano;
         this.mes = mes;
         this.cor = cor;
-        this.prestador = prestador;
-        this.procedimento = procedimento;
+        this.prestador_nome = prestador_nome;
+        this.procedimento_nome = procedimento_nome;
     }
 
     public Integer getNumero() {
@@ -60,25 +60,25 @@ public class Arquivo {
         this.cor = cor;
     }
 
-    public String getPrestador() {
-        return prestador;
+    public String getPrestador_nome() {
+        return prestador_nome;
     }
 
-    public void setPrestador(String prestador) {
-        this.prestador = prestador;
+    public void setPrestador_nome(String prestador_nome) {
+        this.prestador_nome = prestador_nome;
     }
 
-    public String getProcedimento() {
-        return procedimento;
+    public String getProcedimento_nome() {
+        return procedimento_nome;
     }
 
-    public void setProcedimento(String procedimento) {
-        this.procedimento = procedimento;
+    public void setProcedimento_nome(String procedimento_nome) {
+        this.procedimento_nome = procedimento_nome;
     }
 
     @Override
     public String toString() {
-        return "Arquivo{" + "numero=" + numero + ", ano=" + ano + ", mes=" + mes + ", cor=" + cor + ", prestador=" + prestador + ", procedimento=" + procedimento + '}';
+        return "Arquivo{" + "numero=" + numero + ", ano=" + ano + ", mes=" + mes + ", cor=" + cor + ", prestador_nome=" + prestador_nome + ", procedimento_nome=" + procedimento_nome + '}';
     }
 
     @Override
@@ -88,8 +88,8 @@ public class Arquivo {
         hash = 73 * hash + (this.ano != null ? this.ano.hashCode() : 0);
         hash = 73 * hash + (this.mes != null ? this.mes.hashCode() : 0);
         hash = 73 * hash + (this.cor != null ? this.cor.hashCode() : 0);
-        hash = 73 * hash + (this.prestador != null ? this.prestador.hashCode() : 0);
-        hash = 73 * hash + (this.procedimento != null ? this.procedimento.hashCode() : 0);
+        hash = 73 * hash + (this.prestador_nome != null ? this.prestador_nome.hashCode() : 0);
+        hash = 73 * hash + (this.procedimento_nome != null ? this.procedimento_nome.hashCode() : 0);
         return hash;
     }
 
@@ -114,10 +114,10 @@ public class Arquivo {
         if ((this.cor == null) ? (other.cor != null) : !this.cor.equals(other.cor)) {
             return false;
         }
-        if ((this.prestador == null) ? (other.prestador != null) : !this.prestador.equals(other.prestador)) {
+        if ((this.prestador_nome == null) ? (other.prestador_nome != null) : !this.prestador_nome.equals(other.prestador_nome)) {
             return false;
         }
-        if ((this.procedimento == null) ? (other.procedimento != null) : !this.procedimento.equals(other.procedimento)) {
+        if ((this.procedimento_nome == null) ? (other.procedimento_nome != null) : !this.procedimento_nome.equals(other.procedimento_nome)) {
             return false;
         }
         return true;

@@ -32,9 +32,9 @@ public class ProducaoImplements implements ProducaoController {
         int index = 0;
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.cadastraProducao);
-            pstmt.setString(++index, producao.getNome_profisional());
-            pstmt.setString(++index, producao.getNome_prestador());
-            pstmt.setString(++index, producao.getNome_procedimento());
+            pstmt.setString(++index, producao.getProfisional_nome());
+            pstmt.setString(++index, producao.getPrestador_nome());
+            pstmt.setString(++index, producao.getProcedimento_nome());
             pstmt.setDate(++index, producao.getData_digitacao());
             pstmt.setDate(++index, producao.getData_entrada());
             pstmt.setInt(++index, producao.getQuantidade());
@@ -50,9 +50,9 @@ public class ProducaoImplements implements ProducaoController {
         int index = 0;
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.updateProducao);
-            pstmt.setString(++index, producao.getNome_profisional());
-            pstmt.setString(++index, producao.getNome_prestador());
-            pstmt.setString(++index, producao.getNome_procedimento());
+            pstmt.setString(++index, producao.getProfisional_nome());
+            pstmt.setString(++index, producao.getPrestador_nome());
+            pstmt.setString(++index, producao.getProcedimento_nome());
             pstmt.setDate(++index, producao.getData_digitacao());
             pstmt.setDate(++index, producao.getData_entrada());
             pstmt.setInt(++index, producao.getQuantidade());
@@ -69,7 +69,7 @@ public class ProducaoImplements implements ProducaoController {
         int index = 0;
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.excluirProducao);
-            pstmt.setString(++index, producao.getNome_profisional());
+            pstmt.setString(++index, producao.getProfisional_nome());
             pstmt.setLong(++index, producao.getId());
             pstmt.executeUpdate();
             bdConnection.desconectar();
@@ -91,9 +91,9 @@ public class ProducaoImplements implements ProducaoController {
             while (rset.next()) {
                 pro = new Producao();
                 pro.setId(0);
-                pro.setNome_profisional("nome_profissional");
-                pro.setNome_procedimento("nome_procedimento");
-                pro.setNome_prestador("nome_prestador");
+                pro.setProfisional_nome("nome_profissional");
+                pro.setProcedimento_nome("nome_procedimento");
+                pro.setPrestador_nome("nome_prestador");
                 pro.setData_digitacao(null);
                 pro.setData_entrada(null);
                 producoes.add(pro);
