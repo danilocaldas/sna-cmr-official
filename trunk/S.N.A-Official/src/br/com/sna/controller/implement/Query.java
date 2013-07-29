@@ -31,10 +31,10 @@ public class Query {
     String updateProducao = "UPDATE PRODUCAO SET NOME_PROFISSIONAL = ?,NOME_PRESTADOR = ?,NOME_PROCEDIMENTO = ?, SET DATA_DIGITACAO = ?,"
             + "DATA_ENTRADA = ?,QUANTIDADE = ? WHERE ID = ?";
     //CRUD ARQUIVO
-    String cadastraArquivo = "INSERT INTO CAIXA (NUMERO, ANO, MES, COR, PRESTADOR, PROCEDIMENTO) VALUES(?, ?, ?, ?, ?, ?)";
+    String cadastraArquivo = "INSERT INTO CAIXA (NUMERO, ANO, MES, COR, PRESTADOR_NOME, PROCEDIMENTO_NOME) VALUES(?, ?, ?, ?, ?, ?)";
     String consultaArquivo = "SELECT * FROM CAIXA WHERE NUMERO LIKE ?, ANO LIKE = ? AND MES LIKE = ?";
     String excluirCaixa = "DELETE FROM CAIXA WHERE NUMERO LIKE ? AND ANO LIKE ?";
-    String updateArquivo = "UPDATE FROM CAIXA SET ANO = ?,MES = ?,COR = ?,PRESTADOR = ?,PROCEDIMENTO = ? WHERE NUMERO = ?" ;
+    String updateArquivo = "UPDATE CAIXA SET ANO = ?,MES = ?,COR = ?,PRESTADOR_NOME = ?,PROCEDIMENTO_NOME = ? WHERE NUMERO = ?" ;
     //SOMA PRODUCAO
     String somaProducao = "SELECT SUM(quantidade) FROM PRODUCAO GROUP BY NOME_PROFISSIONAL LIKE ?";
 }

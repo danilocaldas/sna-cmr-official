@@ -35,8 +35,8 @@ public class ArquivoImplements implements ArquivoController {
             pstmt.setString(++index, arquivo.getAno());
             pstmt.setString(++index, arquivo.getMes());
             pstmt.setString(++index, arquivo.getCor());
-            pstmt.setString(++index, arquivo.getPrestador());
-            pstmt.setString(++index, arquivo.getProcedimento());
+            pstmt.setString(++index, arquivo.getPrestador_nome());
+            pstmt.setString(++index, arquivo.getProcedimento_nome());
             pstmt.executeUpdate();
             bdConnection.desconectar();
         } catch (SQLException ex) {
@@ -52,8 +52,8 @@ public class ArquivoImplements implements ArquivoController {
             pstmt.setString(++index, arquivo.getAno());
             pstmt.setString(++index, arquivo.getMes());
             pstmt.setString(++index, arquivo.getCor());
-            pstmt.setString(++index, arquivo.getPrestador());
-            pstmt.setString(++index, arquivo.getProcedimento());
+            pstmt.setString(++index, arquivo.getPrestador_nome());
+            pstmt.setString(++index, arquivo.getProcedimento_nome());
             pstmt.setInt(++index, arquivo.getNumero());
             pstmt.executeUpdate();
             bdConnection.desconectar();
@@ -93,8 +93,8 @@ public class ArquivoImplements implements ArquivoController {
                 arq.setAno("ano");
                 arq.setAno("mes");
                 arq.setAno("cor");
-                arq.setAno("prestador");
-                arq.setAno("procedimento");
+                arq.setAno("prestador_nome");
+                arq.setAno("procedimento_nome");
                 arquivos.add(arq);
             }
         } catch (SQLException ex) {

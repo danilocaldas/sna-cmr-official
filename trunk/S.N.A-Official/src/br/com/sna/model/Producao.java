@@ -12,9 +12,9 @@ import java.sql.Date;
  */
 public class Producao {
     private long id;
-    private String nome_prestador;
-    private String nome_profisional;
-    private String nome_procedimento;
+    private String prestador_nome;
+    private String profisional_nome;
+    private String procedimento_nome;
     private Date data_digitacao;
     private Date data_entrada;
     private Integer quantidade;
@@ -22,20 +22,30 @@ public class Producao {
     public Producao() {
     }
 
-    public Producao(long id, String nome_prestador, String nome_profisional, String nome_procedimento, Date data_digitacao, Date data_entrada, Integer quantidade) {
+    public Producao(String prestador_nome, String profisional_nome, String procedimento_nome, Date data_digitacao, Date data_entrada, Integer quantidade) {
+        this.prestador_nome = prestador_nome;
+        this.profisional_nome = profisional_nome;
+        this.procedimento_nome = procedimento_nome;
+        this.data_digitacao = data_digitacao;
+        this.data_entrada = data_entrada;
+        this.quantidade = quantidade;
+    }
+    
+
+    public Producao(long id, String prestador_nome, String profisional_nome, String procedimento_nome, Date data_digitacao, Date data_entrada, Integer quantidade) {
         this.id = id;
-        this.nome_prestador = nome_prestador;
-        this.nome_profisional = nome_profisional;
-        this.nome_procedimento = nome_procedimento;
+        this.prestador_nome = prestador_nome;
+        this.profisional_nome = profisional_nome;
+        this.procedimento_nome = procedimento_nome;
         this.data_digitacao = data_digitacao;
         this.data_entrada = data_entrada;
         this.quantidade = quantidade;
     }
 
-    public Producao(String nome_prestador, String nome_profisional, String nome_procedimento) {
-        this.nome_prestador = nome_prestador;
-        this.nome_profisional = nome_profisional;
-        this.nome_procedimento = nome_procedimento;
+    public Producao(String prestador_nome, String profisional_nome, String procedimento_nome) {
+        this.prestador_nome = prestador_nome;
+        this.profisional_nome = profisional_nome;
+        this.procedimento_nome = procedimento_nome;
     }
 
     public long getId() {
@@ -46,28 +56,28 @@ public class Producao {
         this.id = id;
     }
 
-    public String getNome_prestador() {
-        return nome_prestador;
+    public String getPrestador_nome() {
+        return prestador_nome;
     }
 
-    public void setNome_prestador(String nome_prestador) {
-        this.nome_prestador = nome_prestador;
+    public void setPrestador_nome(String prestador_nome) {
+        this.prestador_nome = prestador_nome;
     }
 
-    public String getNome_profisional() {
-        return nome_profisional;
+    public String getProfisional_nome() {
+        return profisional_nome;
     }
 
-    public void setNome_profisional(String nome_profisional) {
-        this.nome_profisional = nome_profisional;
+    public void setProfisional_nome(String profissional_nome) {
+        this.profisional_nome = profissional_nome;
     }
 
-    public String getNome_procedimento() {
-        return nome_procedimento;
+    public String getProcedimento_nome() {
+        return procedimento_nome;
     }
 
-    public void setNome_procedimento(String nome_procedimento) {
-        this.nome_procedimento = nome_procedimento;
+    public void setProcedimento_nome(String procedimento_nome) {
+        this.procedimento_nome = procedimento_nome;
     }
 
     public Date getData_digitacao() {
@@ -96,19 +106,19 @@ public class Producao {
 
     @Override
     public String toString() {
-        return "Producao{" + "id=" + id + ", nome_prestador=" + nome_prestador + ", nome_profisional=" + nome_profisional + ", nome_procedimento=" + nome_procedimento + ", data_digitacao=" + data_digitacao + ", data_entrada=" + data_entrada + ", quantidade=" + quantidade + '}';
+        return "Producao{" + "id=" + id + ", prestador_nome=" + prestador_nome + ", profisional_nome=" + profisional_nome + ", procedimento_nome=" + procedimento_nome + ", data_digitacao=" + data_digitacao + ", data_entrada=" + data_entrada + ", quantidade=" + quantidade + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 47 * hash + (this.nome_prestador != null ? this.nome_prestador.hashCode() : 0);
-        hash = 47 * hash + (this.nome_profisional != null ? this.nome_profisional.hashCode() : 0);
-        hash = 47 * hash + (this.nome_procedimento != null ? this.nome_procedimento.hashCode() : 0);
-        hash = 47 * hash + (this.data_digitacao != null ? this.data_digitacao.hashCode() : 0);
-        hash = 47 * hash + (this.data_entrada != null ? this.data_entrada.hashCode() : 0);
-        hash = 47 * hash + (this.quantidade != null ? this.quantidade.hashCode() : 0);
+        int hash = 5;
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 97 * hash + (this.prestador_nome != null ? this.prestador_nome.hashCode() : 0);
+        hash = 97 * hash + (this.profisional_nome != null ? this.profisional_nome.hashCode() : 0);
+        hash = 97 * hash + (this.procedimento_nome != null ? this.procedimento_nome.hashCode() : 0);
+        hash = 97 * hash + (this.data_digitacao != null ? this.data_digitacao.hashCode() : 0);
+        hash = 97 * hash + (this.data_entrada != null ? this.data_entrada.hashCode() : 0);
+        hash = 97 * hash + (this.quantidade != null ? this.quantidade.hashCode() : 0);
         return hash;
     }
 
@@ -124,13 +134,13 @@ public class Producao {
         if (this.id != other.id) {
             return false;
         }
-        if ((this.nome_prestador == null) ? (other.nome_prestador != null) : !this.nome_prestador.equals(other.nome_prestador)) {
+        if ((this.prestador_nome == null) ? (other.prestador_nome != null) : !this.prestador_nome.equals(other.prestador_nome)) {
             return false;
         }
-        if ((this.nome_profisional == null) ? (other.nome_profisional != null) : !this.nome_profisional.equals(other.nome_profisional)) {
+        if ((this.profisional_nome == null) ? (other.profisional_nome != null) : !this.profisional_nome.equals(other.profisional_nome)) {
             return false;
         }
-        if ((this.nome_procedimento == null) ? (other.nome_procedimento != null) : !this.nome_procedimento.equals(other.nome_procedimento)) {
+        if ((this.procedimento_nome == null) ? (other.procedimento_nome != null) : !this.procedimento_nome.equals(other.procedimento_nome)) {
             return false;
         }
         if (this.data_digitacao != other.data_digitacao && (this.data_digitacao == null || !this.data_digitacao.equals(other.data_digitacao))) {
@@ -144,6 +154,4 @@ public class Producao {
         }
         return true;
     }
-    
-    
 }
