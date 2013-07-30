@@ -69,17 +69,18 @@ public class PrestadorImplements implements PrestadorController {
     }
 
     @Override
-    public List<Prestador> prestador(String nome) {
+    public List<Prestador> listaPrestador() {
         List<Prestador> prestadores = new ArrayList<Prestador>();
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.consultaPrestador);
-            pstmt.setString(1, nome);
+            //pstmt.setString(1, nome);
             rset = pstmt.executeQuery();
             Prestador pres;
             while (rset.next()) {
                 pres = new Prestador();
-                pres.setNome("nome");
-                //pres.setCnes(Integer.valueOf("cnes"));
+                pres.setId(rset.getLong("id"));
+                pres.setNome(rset.getString("nome"));
+                pres.setCnes(rset.getInt("cnes"));
                 prestadores.add(pres);
             }
         } catch (SQLException ex) {

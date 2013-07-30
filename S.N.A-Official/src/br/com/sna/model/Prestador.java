@@ -9,7 +9,7 @@ package br.com.sna.model;
  * @author Danilo
  */
 public class Prestador extends Cadastro{
-
+    
     private int cnes;
     
     public Prestador() {
