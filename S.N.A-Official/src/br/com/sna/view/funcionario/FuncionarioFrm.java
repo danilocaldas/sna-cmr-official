@@ -4,22 +4,73 @@
  */
 package br.com.sna.view.funcionario;
 
-import javax.swing.JFrame;
+import br.com.sna.controller.implement.FuncionarioImplements;
+import br.com.sna.model.Funcionario;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ritacosta
  */
-public class Funcionario extends javax.swing.JFrame {
+public class FuncionarioFrm extends javax.swing.JFrame {
 
     /**
      * Creates new form Prestador
      */
-    public Funcionario() {
+    private FuncionarioActionControl funcionarioActionControl;
+    DefaultTableModel tmFuncionario = new DefaultTableModel(null, new String[]{"Id", "Nome", "Senha"});
+    List<Funcionario> funcionarios;
+    FuncionarioImplements funcionarioImplements;
+    ListSelectionModel lsmFuncionario;
+
+    public FuncionarioFrm() {
         initComponents();
-        
-        
+        funcionarioImplements = new FuncionarioImplements();
+        funcionarioActionControl = new FuncionarioActionControl(this);
     }
+
+    private void searchFuncionario() {
+        funcionarios = funcionarioImplements.listaFuncionario();
+        mostrarFuncioanrios(funcionarios);
+    }
+
+    private void mostrarFuncioanrios(List<Funcionario> funcionarios) {
+        while (tmFuncionario.getRowCount() < 0) {
+            tmFuncionario.removeRow(0);
+        }
+        if (funcionarios.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum registro!");
+        } else {
+            String[] campos = new String[]{null, null, null};
+            for (int i = 0; i < funcionarios.size(); i++) {
+                tmFuncionario.addRow(campos);
+                tmFuncionario.setValueAt(funcionarios.get(i).getId(), i, 0);
+                tmFuncionario.setValueAt(funcionarios.get(i).getNome(), i, 1);
+                tmFuncionario.setValueAt(funcionarios.get(i).getSenha(), i, 2);
+            }
+
+        }
+    }
+    
+    private void tbFuncionarioLinhaSelecionada(JTable tb) {
+        if (tb.getSelectedRow() != -1) {
+            labelId.setText(String.valueOf(funcionarios.get(tb.getSelectedRow()).getId()));
+            txtNomeFuncionario.setText(funcionarios.get(tb.getSelectedRow()).getNome());
+            ptxtSenhaFuncionario.setText(funcionarios.get(tb.getSelectedRow()).getSenha());
+        } else {
+            labelId.setText("");
+            txtNomeFuncionario.setText("");
+            ptxtSenhaFuncionario.setText("");
+        }
+    }
+
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,12 +97,14 @@ public class Funcionario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        labelId = new javax.swing.JLabel();
         txtNomeFuncionario = new javax.swing.JTextField();
         ptxtSenhaFuncionario = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbFuncionario = new javax.swing.JTable();
+        jToolBar2 = new javax.swing.JToolBar();
+        btPesquisar = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -108,6 +161,7 @@ public class Funcionario extends javax.swing.JFrame {
         jToolBar1.add(jSeparator1);
 
         btSalvarFuncionario.setText("Salvar");
+        btSalvarFuncionario.setEnabled(false);
         btSalvarFuncionario.setFocusable(false);
         btSalvarFuncionario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btSalvarFuncionario.setMaximumSize(new java.awt.Dimension(60, 35));
@@ -115,6 +169,7 @@ public class Funcionario extends javax.swing.JFrame {
         jToolBar1.add(btSalvarFuncionario);
 
         btFinalizarFuncionario.setText("Finalizar");
+        btFinalizarFuncionario.setEnabled(false);
         btFinalizarFuncionario.setFocusable(false);
         btFinalizarFuncionario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btFinalizarFuncionario.setMaximumSize(new java.awt.Dimension(60, 35));
@@ -131,8 +186,6 @@ public class Funcionario extends javax.swing.JFrame {
 
         jLabel2.setText("Id:");
 
-        jLabel5.setText("MostrarId");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -145,23 +198,21 @@ public class Funcionario extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNomeFuncionario)
+                    .addComponent(ptxtSenhaFuncionario)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNomeFuncionario)
-                            .addComponent(ptxtSenhaFuncionario))
-                        .addContainerGap())))
+                        .addComponent(labelId, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 120, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
+                    .addComponent(labelId, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -191,17 +242,16 @@ public class Funcionario extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        tbFuncionario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        tbFuncionario.setModel(tmFuncionario);
+        tbFuncionario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lsmFuncionario = tbFuncionario.getSelectionModel();
+        lsmFuncionario.addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e) {
+                if (! e.getValueIsAdjusting()){
+                    tbFuncionarioLinhaSelecionada(tbFuncionario);
+                }
             }
-        ));
+        });
         jScrollPane1.setViewportView(tbFuncionario);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -217,9 +267,23 @@ public class Funcionario extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(286, 286, 286))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(283, 283, 283))
         );
+
+        jToolBar2.setRollover(true);
+
+        btPesquisar.setText("Listar Funcionarios");
+        btPesquisar.setFocusable(false);
+        btPesquisar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btPesquisar.setMaximumSize(new java.awt.Dimension(120, 35));
+        btPesquisar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btPesquisar);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,13 +291,15 @@ public class Funcionario extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 354, Short.MAX_VALUE)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -241,12 +307,14 @@ public class Funcionario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -262,6 +330,10 @@ public class Funcionario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        searchFuncionario();
+    }//GEN-LAST:event_btPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,20 +352,20 @@ public class Funcionario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Funcionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Funcionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Funcionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Funcionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Funcionario().setVisible(true);
+                new FuncionarioFrm().setVisible(true);
             }
         });
     }
@@ -303,11 +375,11 @@ public class Funcionario extends javax.swing.JFrame {
     private javax.swing.JButton btExcluirFuncionario;
     private javax.swing.JButton btFinalizarFuncionario;
     private javax.swing.JButton btIncluirFuncionario;
+    private javax.swing.JButton btPesquisar;
     private javax.swing.JButton btSalvarFuncionario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -317,8 +389,90 @@ public class Funcionario extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JLabel labelId;
     private javax.swing.JPasswordField ptxtSenhaFuncionario;
     private javax.swing.JTable tbFuncionario;
     private javax.swing.JTextField txtNomeFuncionario;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JButton getBtAlterarFuncionario() {
+        return btAlterarFuncionario;
+    }
+
+    public void setBtAlterarFuncionario(javax.swing.JButton btAlterarFuncionario) {
+        this.btAlterarFuncionario = btAlterarFuncionario;
+    }
+
+    public javax.swing.JButton getBtExcluirFuncionario() {
+        return btExcluirFuncionario;
+    }
+
+    public void setBtExcluirFuncionario(javax.swing.JButton btExcluirFuncionario) {
+        this.btExcluirFuncionario = btExcluirFuncionario;
+    }
+
+    public javax.swing.JButton getBtFinalizarFuncionario() {
+        return btFinalizarFuncionario;
+    }
+
+    public void setBtFinalizarFuncionario(javax.swing.JButton btFinalizarFuncionario) {
+        this.btFinalizarFuncionario = btFinalizarFuncionario;
+    }
+
+    public javax.swing.JButton getBtIncluirFuncionario() {
+        return btIncluirFuncionario;
+    }
+
+    public void setBtIncluirFuncionario(javax.swing.JButton btIncluirFuncionario) {
+        this.btIncluirFuncionario = btIncluirFuncionario;
+    }
+
+    public javax.swing.JButton getBtSalvarFuncionario() {
+        return btSalvarFuncionario;
+    }
+
+    public void setBtSalvarFuncionario(javax.swing.JButton btSalvarFuncionario) {
+        this.btSalvarFuncionario = btSalvarFuncionario;
+    }
+
+    public javax.swing.JLabel getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(javax.swing.JLabel labelId) {
+        this.labelId = labelId;
+    }
+
+    public javax.swing.JPasswordField getPtxtSenhaFuncionario() {
+        return ptxtSenhaFuncionario;
+    }
+
+    public void setPtxtSenhaFuncionario(javax.swing.JPasswordField ptxtSenhaFuncionario) {
+        this.ptxtSenhaFuncionario = ptxtSenhaFuncionario;
+    }
+
+    public javax.swing.JTable getTbFuncionario() {
+        return tbFuncionario;
+    }
+
+    public void setTbFuncionario(javax.swing.JTable tbFuncionario) {
+        this.tbFuncionario = tbFuncionario;
+    }
+
+    public javax.swing.JTextField getTxtNomeFuncionario() {
+        return txtNomeFuncionario;
+    }
+
+    public void setTxtNomeFuncionario(javax.swing.JTextField txtNomeFuncionario) {
+        this.txtNomeFuncionario = txtNomeFuncionario;
+    }
+
+    public javax.swing.JButton getBtPesquisar() {
+        return btPesquisar;
+    }
+
+    public void setBtPesquisar(javax.swing.JButton btPesquisar) {
+        this.btPesquisar = btPesquisar;
+    }
 }
