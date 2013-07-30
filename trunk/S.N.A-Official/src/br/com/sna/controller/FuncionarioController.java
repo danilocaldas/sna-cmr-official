@@ -20,6 +20,6 @@ public interface FuncionarioController {
     public void save(Funcionario funcionario);
     public void update(Funcionario funcionario);
     public void delete(Funcionario funcionario);
-    public List<Funcionario> funcionario(String nome);
+    public List<Funcionario> listaFuncionario();
     
 }

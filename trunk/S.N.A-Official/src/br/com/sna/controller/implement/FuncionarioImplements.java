@@ -25,6 +25,7 @@ public class FuncionarioImplements implements FuncionarioController {
     Query query = new Query();
     PreparedStatement pstmt;
     ResultSet rset;
+    private Funcionario funcionario;
 
     @Override
     public void save(Funcionario funcionario) {
@@ -70,17 +71,17 @@ public class FuncionarioImplements implements FuncionarioController {
     }
 
     @Override
-    public List<Funcionario> funcionario(String nome) {
-        List<Funcionario> fucionarios = new ArrayList<Funcionario>();
+    public List<Funcionario> listaFuncionario() {
+        List<Funcionario> fucionarios = new ArrayList();
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.consultaFuncionario);
-            pstmt.setString(1, nome);
             rset = pstmt.executeQuery();
             Funcionario fun;
             while (rset.next()) {
                 fun = new Funcionario();
-                fun.setNome("nome");
-                fun.setSenha("senha");
+                fun.setId(rset.getLong("id"));
+                fun.setNome(rset.getString("nome"));
+                fun.setSenha(rset.getString("senha"));
                 fucionarios.add(fun);
             }
         } catch (SQLException ex) {
@@ -89,4 +90,14 @@ public class FuncionarioImplements implements FuncionarioController {
 
         return fucionarios;
     }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+    
+    
 }

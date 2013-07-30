@@ -58,5 +58,4 @@ public class Funcionario extends Cadastro{
         return true;
     }
 
-    
 }

@@ -11,7 +11,7 @@ package br.com.sna.controller.implement;
 public class Query {
     //CRUD FUNCIONARIO
     String cadastraFuncionario = "INSERT INTO FUNCIONARIO (NOME, SENHA) VALUES (?, ?)";
-    String consultaFuncionario = "SELECT * FROM FUNCIONARIO WHERE NOME LIKE ?";
+    String consultaFuncionario = "SELECT * FROM FUNCIONARIO ORDER BY NOME ASC";
     String excluirFuncionario = "DELETE FROM FUNCIONARIO WHERE ID LIKE ?";
     String updateFuncionario = "UPDATE FUNCIONARIO SET NOME = ? ,SENHA = ? WHERE ID = ?";
     //CRUD PROCEDIMENTO
