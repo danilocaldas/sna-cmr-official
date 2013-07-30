@@ -4,8 +4,17 @@
  */
 package br.com.sna.view.prestador;
 
+import br.com.sna.controller.implement.PrestadorImplements;
+import br.com.sna.model.Prestador;
 import java.text.NumberFormat;
+import java.util.List;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -13,13 +22,53 @@ import javax.swing.JFormattedTextField;
  * @author ritacosta
  */
 public class FrmPrestador extends javax.swing.JFrame {
-    
-    
+   
+    private DefaultTableModel tmPrestador = new DefaultTableModel(null, new String[]{"Id", "Nome", "CNES"});
+    private List<Prestador> prestadores;
+    private PrestadorActionControl prestadorActionControl;
+    private PrestadorImplements prestadorImplements;
+    private ListSelectionModel lsmPrestador;
     /**
      * Creates new form Prestador
      */
     public FrmPrestador() {
         initComponents();
+        prestadorActionControl = new PrestadorActionControl(this);
+        prestadorImplements = new PrestadorImplements();
+    }
+    
+    private void searchPrestador() {
+        prestadores = prestadorImplements.listaPrestador();
+        mostrarPrestadores(prestadores);
+    }
+
+    private void mostrarPrestadores(List<Prestador> prestador) {
+        while (tmPrestador.getRowCount() < 0) {
+            tmPrestador.removeRow(0);
+        }
+        if (prestadores.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum registro!");
+        } else {
+            String[] campos = new String[]{null, null, null};
+            for (int i = 0; i < prestadores.size(); i++) {
+                tmPrestador.addRow(campos);
+                tmPrestador.setValueAt(prestadores.get(i).getId(), i, 0);
+                tmPrestador.setValueAt(prestadores.get(i).getNome(), i, 1);
+                tmPrestador.setValueAt(prestadores.get(i).getCnes(), i, 2);
+            }
+        }
+    }
+    
+    private void tbPrestadorLinhaSelecionada(JTable tb) {
+        if (tb.getSelectedRow() != -1) {
+            labelId.setText(String.valueOf(prestadores.get(tb.getSelectedRow()).getId()));
+            txtNomePrestador.setText(prestadores.get(tb.getSelectedRow()).getNome());
+            txtCnes.setText(String.valueOf(prestadores.get(tb.getSelectedRow()).getCnes()));
+        } else {
+            labelId.setText("");
+            txtNomePrestador.setText("");
+            txtCnes.setText("");
+        }
     }
 
     
@@ -32,33 +81,36 @@ public class FrmPrestador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         btIncluirPrestador = new javax.swing.JButton();
-        btAlterarPrestador = new javax.swing.JButton();
+        btPrepararAlterarPrestador = new javax.swing.JButton();
         btExcluirPrestadot = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btSalvarPrestador = new javax.swing.JButton();
+        btAlterarPrestador = new javax.swing.JButton();
         BtFinalizarPrestador = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        labelId = new javax.swing.JLabel();
         txtNomePrestador = new javax.swing.JTextField();
         txtCnes = new JFormattedTextField(NumberFormat.getNumberInstance());
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPrestador = new javax.swing.JTable();
-
-        jTextField1.setText("jTextField1");
+        jToolBar2 = new javax.swing.JToolBar();
+        btPesquisar = new javax.swing.JButton();
+        btLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Prestador");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -91,14 +143,14 @@ public class FrmPrestador extends javax.swing.JFrame {
         btIncluirPrestador.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btIncluirPrestador);
 
-        btAlterarPrestador.setText("Alterar");
-        btAlterarPrestador.setFocusable(false);
-        btAlterarPrestador.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btAlterarPrestador.setMaximumSize(new java.awt.Dimension(60, 35));
-        btAlterarPrestador.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(btAlterarPrestador);
+        btPrepararAlterarPrestador.setText("Modificar");
+        btPrepararAlterarPrestador.setFocusable(false);
+        btPrepararAlterarPrestador.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btPrepararAlterarPrestador.setMaximumSize(new java.awt.Dimension(60, 35));
+        btPrepararAlterarPrestador.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btPrepararAlterarPrestador);
 
-        btExcluirPrestadot.setText("Exluir");
+        btExcluirPrestadot.setText("Excluir");
         btExcluirPrestadot.setFocusable(false);
         btExcluirPrestadot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btExcluirPrestadot.setMaximumSize(new java.awt.Dimension(60, 35));
@@ -107,6 +159,7 @@ public class FrmPrestador extends javax.swing.JFrame {
         jToolBar1.add(jSeparator1);
 
         btSalvarPrestador.setText("Salvar");
+        btSalvarPrestador.setEnabled(false);
         btSalvarPrestador.setFocusable(false);
         btSalvarPrestador.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btSalvarPrestador.setMaximumSize(new java.awt.Dimension(60, 35));
@@ -118,7 +171,16 @@ public class FrmPrestador extends javax.swing.JFrame {
         });
         jToolBar1.add(btSalvarPrestador);
 
+        btAlterarPrestador.setText("Alterar");
+        btAlterarPrestador.setEnabled(false);
+        btAlterarPrestador.setFocusable(false);
+        btAlterarPrestador.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btAlterarPrestador.setMaximumSize(new java.awt.Dimension(60, 35));
+        btAlterarPrestador.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btAlterarPrestador);
+
         BtFinalizarPrestador.setText("Finalizar");
+        BtFinalizarPrestador.setEnabled(false);
         BtFinalizarPrestador.setFocusable(false);
         BtFinalizarPrestador.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtFinalizarPrestador.setMaximumSize(new java.awt.Dimension(60, 35));
@@ -135,7 +197,9 @@ public class FrmPrestador extends javax.swing.JFrame {
 
         jLabel2.setText("Id:");
 
-        jLabel5.setText("MostrarId");
+        txtNomePrestador.setEnabled(false);
+
+        txtCnes.setEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -152,22 +216,20 @@ public class FrmPrestador extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNomePrestador)
+                    .addComponent(txtCnes)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNomePrestador)
-                            .addComponent(txtCnes))
-                        .addContainerGap())))
+                        .addComponent(labelId, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 139, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel5))
+                    .addComponent(labelId, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomePrestador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,7 +238,7 @@ public class FrmPrestador extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtCnes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -191,91 +253,126 @@ public class FrmPrestador extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        tbPrestador.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        tbPrestador.setModel(tmPrestador);
+        tbPrestador.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lsmPrestador = tbPrestador.getSelectionModel();
+        lsmPrestador.addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e) {
+                if (! e.getValueIsAdjusting()){
+                    tbPrestadorLinhaSelecionada(tbPrestador);
+                }
             }
-        ));
+        });
         jScrollPane1.setViewportView(tbPrestador);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(135, 135, 135))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(286, 286, 286))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        jToolBar2.setRollover(true);
+
+        btPesquisar.setText("Listar Prestador");
+        btPesquisar.setFocusable(false);
+        btPesquisar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btPesquisar.setMaximumSize(new java.awt.Dimension(120, 35));
+        btPesquisar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btPesquisar);
+
+        btLimpar.setText("Limpar");
+        btLimpar.setFocusable(false);
+        btLimpar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btLimpar.setMaximumSize(new java.awt.Dimension(120, 35));
+        btLimpar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(btLimpar);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-720)/2, (screenSize.height-339)/2, 720, 339);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarPrestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarPrestadorActionPerformed
-      FrmPrestadorControl frmPrestadorControl = new FrmPrestadorControl();
-      frmPrestadorControl.insertPrestador();
+     
     }//GEN-LAST:event_btSalvarPrestadorActionPerformed
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        searchPrestador();
+    }//GEN-LAST:event_btPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,12 +413,14 @@ public class FrmPrestador extends javax.swing.JFrame {
     private javax.swing.JButton btAlterarPrestador;
     private javax.swing.JButton btExcluirPrestadot;
     private javax.swing.JButton btIncluirPrestador;
+    private javax.swing.JButton btLimpar;
+    private javax.swing.JButton btPesquisar;
+    private javax.swing.JButton btPrepararAlterarPrestador;
     private javax.swing.JButton btSalvarPrestador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -329,8 +428,9 @@ public class FrmPrestador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JLabel labelId;
     private javax.swing.JTable tbPrestador;
     private javax.swing.JFormattedTextField txtCnes;
     private javax.swing.JTextField txtNomePrestador;
@@ -345,11 +445,11 @@ public class FrmPrestador extends javax.swing.JFrame {
     }
 
     public javax.swing.JButton getBtAlterarPrestador() {
-        return btAlterarPrestador;
+        return btPrepararAlterarPrestador;
     }
 
     public void setBtAlterarPrestador(javax.swing.JButton btAlterarPrestador) {
-        this.btAlterarPrestador = btAlterarPrestador;
+        this.btPrepararAlterarPrestador = btAlterarPrestador;
     }
 
     public javax.swing.JButton getBtExcluirPrestadot() {
@@ -401,4 +501,46 @@ public class FrmPrestador extends javax.swing.JFrame {
     public void setTxtCnes(javax.swing.JFormattedTextField txtCnes) {
         this.txtCnes = txtCnes;
     }
+
+    public javax.swing.JLabel getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(javax.swing.JLabel labelId) {
+        this.labelId = labelId;
+    }
+
+    public javax.swing.JButton getBtAlterar() {
+        return btAlterarPrestador;
+    }
+
+    public void setBtAlterar(javax.swing.JButton btAlterar) {
+        this.btAlterarPrestador = btAlterar;
+    }
+
+    public javax.swing.JButton getBtLimpar() {
+        return btLimpar;
+    }
+
+    public void setBtLimpar(javax.swing.JButton btLimpar) {
+        this.btLimpar = btLimpar;
+    }
+
+    public javax.swing.JButton getBtPesquisar() {
+        return btPesquisar;
+    }
+
+    public void setBtPesquisar(javax.swing.JButton btPesquisar) {
+        this.btPesquisar = btPesquisar;
+    }
+
+    public javax.swing.JButton getBtPrepararAlterarPrestador() {
+        return btPrepararAlterarPrestador;
+    }
+
+    public void setBtPrepararAlterarPrestador(javax.swing.JButton btPrepararAlterarPrestador) {
+        this.btPrepararAlterarPrestador = btPrepararAlterarPrestador;
+    }
+    
+    
 }

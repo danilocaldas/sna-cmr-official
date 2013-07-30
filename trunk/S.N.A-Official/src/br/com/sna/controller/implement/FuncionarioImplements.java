@@ -84,11 +84,13 @@ public class FuncionarioImplements implements FuncionarioController {
                 fun.setSenha(rset.getString("senha"));
                 fucionarios.add(fun);
             }
+            bdConnection.desconectar();
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioImplements.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return fucionarios;
+        
     }
 
     public Funcionario getFuncionario() {
