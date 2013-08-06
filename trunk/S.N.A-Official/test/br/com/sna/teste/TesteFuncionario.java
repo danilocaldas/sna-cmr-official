@@ -4,8 +4,8 @@
  */
 package br.com.sna.teste;
 
-import br.com.sna.controller.implement.FuncionarioImplements;
-import br.com.sna.model.Funcionario;
+import br.com.sna.model.service.FuncionarioImplements;
+import br.com.sna.model.dao.Funcionario;
 
 /**
  *

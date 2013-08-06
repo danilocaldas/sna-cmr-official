@@ -4,8 +4,8 @@
  */
 package br.com.sna.teste;
 
-import br.com.sna.controller.implement.ProducaoImplements;
-import br.com.sna.model.Producao;
+import br.com.sna.model.service.ProducaoImplements;
+import br.com.sna.model.dao.Producao;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 

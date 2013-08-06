@@ -4,8 +4,8 @@
  */
 package br.com.sna.teste;
 
-import br.com.sna.controller.implement.ArquivoImplements;
-import br.com.sna.model.Arquivo;
+import br.com.sna.model.service.ArquivoImplements;
+import br.com.sna.model.dao.Arquivo;
 
 /**
  *
