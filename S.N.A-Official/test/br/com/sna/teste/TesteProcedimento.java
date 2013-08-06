@@ -4,8 +4,8 @@
  */
 package br.com.sna.teste;
 
-import br.com.sna.controller.implement.ProcedimentoImplements;
-import br.com.sna.model.Procedimento;
+import br.com.sna.model.service.ProcedimentoImplements;
+import br.com.sna.model.dao.Procedimento;
 
 /**
  *

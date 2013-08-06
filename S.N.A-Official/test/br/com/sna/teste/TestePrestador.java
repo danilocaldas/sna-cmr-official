@@ -4,8 +4,8 @@
  */
 package br.com.sna.teste;
 
-import br.com.sna.controller.implement.PrestadorImplements;
-import br.com.sna.model.Prestador;
+import br.com.sna.model.service.PrestadorImplements;
+import br.com.sna.model.dao.Prestador;
 
 /**
  *
