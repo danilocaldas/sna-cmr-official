@@ -5,7 +5,6 @@
 package br.com.sna.model.service;
 
 import br.com.sna.connection.ConnectionfactoryMYSQL;
-import br.com.sna.model.service.PrestadorController;
 import br.com.sna.model.dao.Prestador;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,6 +80,25 @@ public class PrestadorImplements implements PrestadorController {
                 pres.setId(rset.getLong("id"));
                 pres.setNome(rset.getString("nome"));
                 pres.setCnes(rset.getInt("cnes"));
+                prestadores.add(pres);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PrestadorImplements.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return prestadores;
+    }
+
+    @Override
+    public List<Prestador> listPrestador(String nome) {
+        List<Prestador> prestadores = new ArrayList<Prestador>();
+        try {
+            pstmt = bdConnection.conectar().prepareStatement(query.listaPrestador);
+            pstmt.setString(1, nome);
+            rset = pstmt.executeQuery();
+            Prestador pres;
+            while (rset.next()) {
+                pres = new Prestador();
+                pres.setNome(rset.getString("nome"));
                 prestadores.add(pres);
             }
         } catch (SQLException ex) {

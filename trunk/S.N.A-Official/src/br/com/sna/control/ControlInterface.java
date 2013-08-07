@@ -24,9 +24,9 @@ public interface ControlInterface {
 
     public void habilitarCamposDoFrm();
 
-    public void prepararAlterarFuncionario();
+    public void prepararAlterar();
 
-    public void preparaInserirFuncionario();
+    public void preparaInserir();
 
     public void alterar();
 

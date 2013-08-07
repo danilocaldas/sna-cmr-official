@@ -14,10 +14,11 @@ import java.util.List;
 public interface ProcedimentoController {
     /**
      * 
-     * @param procedimento Crud do procedimento 
+     * @param listarProcedimento Crud do listarProcedimento 
      */
     public void save (Procedimento procedimento);
     public void update(Procedimento procedimento);
     public void delete(Procedimento procedimento);
-    public List<Procedimento>  procedimento();
+    public List<Procedimento>  listarProcedimento();
+    public List<Procedimento> listProcedimento(String nome);
 }

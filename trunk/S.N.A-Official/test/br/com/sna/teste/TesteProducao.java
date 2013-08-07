@@ -22,7 +22,7 @@ public class TesteProducao {
         
         Producao p = new Producao();
         p.setPrestador_nome("HSA");
-        p.setProfisional_nome("Danilo Caldas");
+        p.setFuncionario_nome("Danilo Caldas");
         p.setProcedimento_nome("RADIO");
         p.setData_digitacao(Date.valueOf(formato.format(dataDigitacao)));
         p.setData_entrada(Date.valueOf(formato.format(dataEntrada)));

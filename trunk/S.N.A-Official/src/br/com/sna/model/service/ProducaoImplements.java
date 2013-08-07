@@ -5,7 +5,6 @@
 package br.com.sna.model.service;
 
 import br.com.sna.connection.ConnectionfactoryMYSQL;
-import br.com.sna.model.service.ProducaoController;
 import br.com.sna.model.dao.Producao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +31,7 @@ public class ProducaoImplements implements ProducaoController {
         int index = 0;
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.cadastraProducao);
-            pstmt.setString(++index, producao.getProfisional_nome());
+            pstmt.setString(++index, producao.getFuncionario_nome());
             pstmt.setString(++index, producao.getPrestador_nome());
             pstmt.setString(++index, producao.getProcedimento_nome());
             pstmt.setDate(++index, producao.getData_digitacao());
@@ -50,7 +49,7 @@ public class ProducaoImplements implements ProducaoController {
         int index = 0;
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.updateProducao);
-            pstmt.setString(++index, producao.getProfisional_nome());
+            pstmt.setString(++index, producao.getFuncionario_nome());
             pstmt.setString(++index, producao.getPrestador_nome());
             pstmt.setString(++index, producao.getProcedimento_nome());
             pstmt.setDate(++index, producao.getData_digitacao());
@@ -69,7 +68,7 @@ public class ProducaoImplements implements ProducaoController {
         int index = 0;
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.excluirProducao);
-            pstmt.setString(++index, producao.getProfisional_nome());
+            pstmt.setString(++index, producao.getFuncionario_nome());
             pstmt.setLong(++index, producao.getId());
             pstmt.executeUpdate();
             bdConnection.desconectar();
@@ -91,7 +90,7 @@ public class ProducaoImplements implements ProducaoController {
             while (rset.next()) {
                 pro = new Producao();
                 pro.setId(0);
-                pro.setProfisional_nome("nome_profissional");
+                pro.setFuncionario_nome("nome_profissional");
                 pro.setProcedimento_nome("nome_procedimento");
                 pro.setPrestador_nome("nome_prestador");
                 pro.setData_digitacao(null);

@@ -78,7 +78,7 @@ public class PrestadorActionControl implements ControlInterface, ActionListener 
     }
 
     @Override
-    public void prepararAlterarFuncionario() {
+    public void prepararAlterar() {
         if (frm.getTbPrestador().getSelectedRow() != -1) {
             enableButtonsToSaveAction();
             habilitarCamposDoFrm();
@@ -91,7 +91,7 @@ public class PrestadorActionControl implements ControlInterface, ActionListener 
     }
 
     @Override
-    public void preparaInserirFuncionario() {
+    public void preparaInserir() {
         enableButtonsToSaveAction();
         habilitarCamposDoFrm();
         habilitarBtSalvar();
@@ -122,6 +122,8 @@ public class PrestadorActionControl implements ControlInterface, ActionListener 
             disableButtonsToSaveAction();
             limparCampos();
             desabilitarCampoDoFrm();
+            limparTabela(prestadores);
+            frm.searchPrestadores();
         }
     }
 
@@ -133,6 +135,8 @@ public class PrestadorActionControl implements ControlInterface, ActionListener 
             disableButtonsToSaveAction();
             limparCampos();
             desabilitarCampoDoFrm();
+            limparTabela(prestadores);
+            frm.searchPrestadores();
         }
     }
 
@@ -144,6 +148,8 @@ public class PrestadorActionControl implements ControlInterface, ActionListener 
             disableButtonsToSaveAction();
             limparCampos();
             desabilitarCampoDoFrm();
+            limparTabela(prestadores);
+            frm.searchPrestadores();
         } else {
             JOptionPane.showMessageDialog(frm, "Selecione um registro!");
         }
@@ -163,22 +169,24 @@ public class PrestadorActionControl implements ControlInterface, ActionListener 
         }
         prestador.setNome(frm.getTxtNomePrestador().getText());
         prestador.setCnes(Integer.parseInt(String.valueOf(frm.getFtxtCnes().getText())));
-
+        
         return prestador;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Incluir")) {
-            preparaInserirFuncionario();
+            preparaInserir();
         } else if (e.getActionCommand().equals("Modificar")) {
-            prepararAlterarFuncionario();
+            prepararAlterar();
         } else if (e.getActionCommand().equals("Excluir")) {
             excluir();
         } else if (e.getActionCommand().equals("Salvar")) {
             salvar();
+            desabilitarBtSalvar();
         } else if (e.getActionCommand().equals("Alterar")) {
             alterar();
+            desabilitarBtAlterar();
         } else if (e.getActionCommand().equals("Limpar")) {
             limparTabela(prestadores);
         } else if (e.getActionCommand().equals("Finalizar")) {
