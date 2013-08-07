@@ -92,12 +92,24 @@ public class FuncionarioImplements implements FuncionarioController {
         
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
+    @Override
+    public List<Funcionario> listFun(String nome) {
+     List<Funcionario> fucionarios = new ArrayList();
+        try {
+            pstmt = bdConnection.conectar().prepareStatement(query.listaFuncionario);
+            pstmt.setString(1, nome);
+            rset = pstmt.executeQuery();
+            Funcionario fun;
+            while (rset.next()) {
+                fun = new Funcionario();
+                fun.setNome(rset.getString("nome"));
+                fucionarios.add(fun);
+            }
+            bdConnection.desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(FuncionarioImplements.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return fucionarios;   
     }
     
     

@@ -21,5 +21,6 @@ public interface FuncionarioController {
     public void update(Funcionario funcionario);
     public void delete(Funcionario funcionario);
     public List<Funcionario> listaFuncionario();
+    public List<Funcionario> listFun(String nome);
     
 }

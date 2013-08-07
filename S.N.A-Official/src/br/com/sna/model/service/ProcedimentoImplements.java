@@ -26,9 +26,9 @@ public class ProcedimentoImplements implements ProcedimentoController {
     ResultSet rset;
 
     /**
-     * Salvar procedimento na base de dados
+     * Salvar listarProcedimento na base de dados
      *
-     * @param procedimento
+     * @param listarProcedimento
      */
     @Override
     public void save(Procedimento procedimento) {
@@ -73,13 +73,13 @@ public class ProcedimentoImplements implements ProcedimentoController {
     }
 
     /**
-     * Fazer pesquisa no banco retornando o Codigo do procedimento e nome
+     * Fazer pesquisa no banco retornando o Codigo do listarProcedimento e nome
      *
      * @param nome usado para efetuar a pesquisa
      * @return
      */
     @Override
-    public List<Procedimento> procedimento() {
+    public List<Procedimento> listarProcedimento() {
         List<Procedimento> procedimentos = new ArrayList<Procedimento>();
         try {
             pstmt = bdConnection.conectar().prepareStatement(query.consultaProcedimento);
@@ -90,6 +90,25 @@ public class ProcedimentoImplements implements ProcedimentoController {
                 pro = new Procedimento();
                 pro.setId(rset.getLong("id"));
                 pro.setCodigo(rset.getInt("codigo"));
+                pro.setNome(rset.getString("nome"));
+                procedimentos.add(pro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProcedimentoImplements.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return procedimentos;
+    }
+
+    @Override
+    public List<Procedimento> listProcedimento(String nome) {
+        List<Procedimento> procedimentos = new ArrayList<Procedimento>();
+        try {
+            pstmt = bdConnection.conectar().prepareStatement(query.listaProcedimento);
+            pstmt.setString(1, nome);
+            rset = pstmt.executeQuery();
+            Procedimento pro;
+            while (rset.next()) {
+                pro = new Procedimento();
                 pro.setNome(rset.getString("nome"));
                 procedimentos.add(pro);
             }

@@ -12,16 +12,19 @@ public class Query {
     //CRUD FUNCIONARIO
     String cadastraFuncionario = "INSERT INTO FUNCIONARIO (NOME, SENHA) VALUES (?, ?)";
     String consultaFuncionario = "SELECT * FROM FUNCIONARIO ORDER BY NOME ASC";
+    String listaFuncionario = "SELECT * FROM FUNCIONARIO WHERE NOME LIKE ? ORDER BY NOME ASC";
     String excluirFuncionario = "DELETE FROM FUNCIONARIO WHERE ID LIKE ?";
     String updateFuncionario = "UPDATE FUNCIONARIO SET NOME = ? ,SENHA = ? WHERE ID = ?";
     //CRUD PROCEDIMENTO
     String cadastraProcedimento = "INSERT INTO PROCEDIMENTO (CODIGO, NOME) VALUES (?, ?)";
     String consultaProcedimento = "SELECT * FROM PROCEDIMENTO ORDER BY NOME ASC";
+    String listaProcedimento = "SELECT * FROM PROCEDIMENTO WHERE NOME LIKE ? ORDER BY NOME ASC";
     String excluirProcedimento = "DELETE FROM PROCEDIMENTO WHERE CODIGO LIKE ?";
     String updateProcedimento = "UPDATE PROCEDIMENTO SET NOME = ?,CODIGO = ? WHERE ID = ?";
     //CRUD PRESTADOR
     String cadastraPrestador = "INSERT INTO PRESTADOR (CNES, NOME) VALUES (?, ?)";
     String consultaPrestador = "SELECT * FROM PRESTADOR ORDER BY NOME ASC";
+    String listaPrestador = "SELECT * FROM PRESTADOR WHERE NOME LIKE ? ORDER BY NOME ASC";
     String excluirPrestador = "DELETE FROM PRESTADOR WHERE CNES LIKE ?";
     String updatePrestador = "UPDATE PRESTADOR SET NOME = ?,CNES = ? WHERE ID = ?";
     //CRUD PRODUCAO

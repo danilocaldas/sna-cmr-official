@@ -40,8 +40,8 @@ public class ProcedimentoFrm extends javax.swing.JFrame {
 
     }
 
-    public void searchPrestadores() {
-        procedimentos = procedimentoImplements.procedimento();
+    public void searchProcedimentos() {
+        procedimentos = procedimentoImplements.listarProcedimento();
         mostrarProcedimentos(procedimentos);
     }
 
@@ -113,7 +113,7 @@ public class ProcedimentoFrm extends javax.swing.JFrame {
         jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Prestador");
+        setTitle("Procedimento");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -320,7 +320,7 @@ public class ProcedimentoFrm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 354, Short.MAX_VALUE)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -353,7 +353,7 @@ public class ProcedimentoFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btPesquisarProcedimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarProcedimentoActionPerformed
-        searchPrestadores();
+        searchProcedimentos();
     }//GEN-LAST:event_btPesquisarProcedimentoActionPerformed
 
     /**

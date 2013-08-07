@@ -18,7 +18,7 @@ public class TesteProcedimento {
          procedimento.setCodigo(4269429);
          
          ProcedimentoImplements pi = new ProcedimentoImplements();
-      //   pi.save(procedimento);
+      //   pi.save(listarProcedimento);
          
          Procedimento procedimento2 = new Procedimento();
          procedimento2.setNome("RADIO");

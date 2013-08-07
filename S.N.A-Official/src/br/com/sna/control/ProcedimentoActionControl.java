@@ -79,7 +79,7 @@ public class ProcedimentoActionControl implements ControlInterface, ActionListen
     }
 
     @Override
-    public void prepararAlterarFuncionario() {
+    public void prepararAlterar() {
         if (frm.getTbProcedimento().getSelectedRow() != -1) {
             enableButtonsToSaveAction();
             habilitarCamposDoFrm();
@@ -91,7 +91,7 @@ public class ProcedimentoActionControl implements ControlInterface, ActionListen
     }
 
     @Override
-    public void preparaInserirFuncionario() {
+    public void preparaInserir() {
         enableButtonsToSaveAction();
         habilitarCamposDoFrm();
         habilitarBtSalvar();
@@ -106,6 +106,8 @@ public class ProcedimentoActionControl implements ControlInterface, ActionListen
         disableButtonsToSaveAction();
         limparCampos();
         desabilitarCampoDoFrm();
+        limparTabela(procedimentos);
+        frm.searchProcedimentos();
         }
     }
 
@@ -143,15 +145,17 @@ public class ProcedimentoActionControl implements ControlInterface, ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Incluir")) {
-            preparaInserirFuncionario();
+            preparaInserir();
         } else if (e.getActionCommand().equals("Modificar")) {
-            prepararAlterarFuncionario();
+            prepararAlterar();
         } else if (e.getActionCommand().equals("Excluir")) {
             excluir();
         } else if (e.getActionCommand().equals("Salvar")) {
             salvar();
+            desabilitarBtSalvar();
         } else if (e.getActionCommand().equals("Alterar")) {
             alterar();
+            desabilitarBtAlterar();
         } else if (e.getActionCommand().equals("Finalizar")) {
             desabilitarBtAlterar();
             desabilitarBtSalvar();

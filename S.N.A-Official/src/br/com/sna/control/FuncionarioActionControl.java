@@ -82,8 +82,10 @@ public class FuncionarioActionControl implements ActionListener {
             excluir();
         } else if (event.getActionCommand().equals("Salvar")) {
             salvar();
+            desabilitarBtSalvar();
         } else if (event.getActionCommand().equals("Alterar")) {
             alterar();
+            desabilitarBtAlterar();
         } else if (event.getActionCommand().equals("Limpar")) {
             limparTabela(funcionarios);
         } else if (event.getActionCommand().equals("Finalizar")) {
@@ -132,22 +134,26 @@ public class FuncionarioActionControl implements ActionListener {
     }
 
     private void alterar() {
-        if(verificarCampos()){
-        funcionarioImplements.update(formToFuncionario());
-        JOptionPane.showMessageDialog(frm, "Funcionario Alterado", "Alterar", JOptionPane.INFORMATION_MESSAGE);
-        disableButtonsToSaveAction();
-        limparCampos();
-        desabilitarCampoDoFrm();
+        if (verificarCampos()) {
+            funcionarioImplements.update(formToFuncionario());
+            JOptionPane.showMessageDialog(frm, "Funcionario Alterado", "Alterar", JOptionPane.INFORMATION_MESSAGE);
+            disableButtonsToSaveAction();
+            limparCampos();
+            desabilitarCampoDoFrm();
+            limparTabela(funcionarios);
+            frm.searchFuncionario();
         }
     }
 
     private void salvar() {
-        if(verificarCampos()){
-        funcionarioImplements.save(formToFuncionario());
-        JOptionPane.showMessageDialog(frm, "Funcionario salvo", "Salvar", JOptionPane.INFORMATION_MESSAGE);
-        disableButtonsToSaveAction();
-        limparCampos();
-        desabilitarCampoDoFrm();
+        if (verificarCampos()) {
+            funcionarioImplements.save(formToFuncionario());
+            JOptionPane.showMessageDialog(frm, "Funcionario salvo", "Salvar", JOptionPane.INFORMATION_MESSAGE);
+            disableButtonsToSaveAction();
+            limparCampos();
+            desabilitarCampoDoFrm();
+            limparTabela(funcionarios);
+            frm.searchFuncionario();
         }
     }
 
@@ -158,6 +164,8 @@ public class FuncionarioActionControl implements ActionListener {
             disableButtonsToSaveAction();
             limparCampos();
             desabilitarCampoDoFrm();
+            limparTabela(funcionarios);
+            frm.searchFuncionario();
         } else {
             JOptionPane.showMessageDialog(frm, "Selecione um registro!", "Excluir", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -182,12 +190,11 @@ public class FuncionarioActionControl implements ActionListener {
     }
 
     private boolean verificarCampos() {
-        if (!frm.getTxtNomeFuncionario().getText().equals("")&& !frm.getPtxtSenhaFuncionario().getText().equals("")) {
+        if (!frm.getTxtNomeFuncionario().getText().equals("") && !frm.getPtxtSenhaFuncionario().getText().equals("")) {
             return true;
         } else {
             JOptionPane.showMessageDialog(frm, "Falta preencher algum campo no formulário!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-            return false;
-        }
-
+        return false;
     }
+}
