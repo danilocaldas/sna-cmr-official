@@ -12,6 +12,7 @@ import br.com.sna.model.service.FuncionarioImplements;
 import br.com.sna.model.service.PrestadorImplements;
 import br.com.sna.model.service.ProcedimentoImplements;
 import br.com.sna.model.service.ProducaoImplements;
+
 import br.com.sna.view.ProducaoFrm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +20,14 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
  * @author Danilo
  */
 public class ProducaoActionControl implements ControlInterface, ActionListener {
-
+    
     public List<Procedimento> procedimentos;
     public List<Prestador> prestadores;
     public List<Funcionario> funcionarios;
@@ -35,9 +37,11 @@ public class ProducaoActionControl implements ControlInterface, ActionListener {
     ProcedimentoImplements procedimentoImplements;
     PrestadorImplements prestadorImplements;
     FuncionarioImplements funcionarioImplements;
+    
 
     public ProducaoActionControl(ProducaoFrm frm) {
         this.frm = frm;
+        
 
         producaoImplements = new ProducaoImplements();
         procedimentoImplements = new ProcedimentoImplements();
@@ -114,21 +118,19 @@ public class ProducaoActionControl implements ControlInterface, ActionListener {
         frm.getBtAlterar().setEnabled(false);
     }
 
-//    public boolean verificarCampos() {
-//        if (!frm.getjDateChooserDataEntrada().getDate().equals()
-//                && !frm.getjDateChooserDataDigitacao().getDate().equals()) {
-//            return true;
-//        } else {
-//            JOptionPane.showMessageDialog(frm,
-//                    "Datas necessárias para efetuar o cadastro!",
-//                    "Error", JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        }
-//    }
+    public boolean verificarCamposDatas() {
+        if (frm.getjDateChooserDataEntrada().getDate().equals("")
+                && frm.getjDateChooserDataDigitacao().getDate().equals("")) {
+            JOptionPane.showMessageDialog(frm, "Preeencha as datas!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     private boolean verificarQuantidade() {
-        
-        if (Integer.parseInt(String.valueOf(frm.getFtxtQuantidade().getText())) > 0) {
+
+        if (Integer.parseInt(String.valueOf(frm.getFtxtQuantidade().getValue())) > 0) {
             return true;
         }
         JOptionPane.showMessageDialog(frm, "Campo quantidade é obrigatório!",
@@ -166,21 +168,21 @@ public class ProducaoActionControl implements ControlInterface, ActionListener {
             limparCampos();
             desabilitarCampoDoFrm();
             limparTabela(producoes);
-            //frm.searchProducao();
+            frm.searchProducao();
 
         }
     }
 
     @Override
     public void salvar() {
-        if (verificarQuantidade()) {
+        if (verificarCamposDatas()) {
             producaoImplements.save(formToProducao());
             JOptionPane.showMessageDialog(frm, "Producao Salva", "Salvar", JOptionPane.INFORMATION_MESSAGE);
             disableButtonsToSaveAction();
             limparCampos();
             desabilitarCampoDoFrm();
             limparTabela(producoes);
-            //frm.searchProducao();
+            frm.searchProducao();
         }
     }
 
@@ -193,7 +195,7 @@ public class ProducaoActionControl implements ControlInterface, ActionListener {
             limparCampos();
             desabilitarCampoDoFrm();
             limparTabela(producoes);
-            //frm.searchProducao();
+            frm.searchProducao();
         } else {
             JOptionPane.showMessageDialog(frm, "Selecione um registro!");
         }
@@ -207,14 +209,13 @@ public class ProducaoActionControl implements ControlInterface, ActionListener {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataEntrada = (java.util.Date) frm.getjDateChooserDataEntrada().getDate();
         java.util.Date dataDigitacao = (java.util.Date) frm.getjDateChooserDataDigitacao().getDate();
-
-        producao.setProcedimento_nome(frm.getBoxProcedimento().getSelectedItem().toString());
+        
         producao.setFuncionario_nome(frm.getBoxProfissional().getSelectedItem().toString());
         producao.setPrestador_nome(frm.getBoxPrestador().getSelectedItem().toString());
-
+        producao.setProcedimento_nome(frm.getBoxProcedimento().getSelectedItem().toString());
         producao.setData_entrada(Date.valueOf(formato.format(dataEntrada)));
         producao.setData_digitacao(Date.valueOf(formato.format(dataDigitacao)));
-        producao.setQuantidade(Integer.parseInt(String.valueOf(frm.getFtxtQuantidade().getText())));
+        producao.setQuantidade(Integer.parseInt(frm.getFtxtQuantidade().getText()));
 
         return producao;
 
@@ -243,6 +244,9 @@ public class ProducaoActionControl implements ControlInterface, ActionListener {
             frm.getBoxPrestador().addItem(prestadores.get(i).getNome());
         }
     }
+    
+    
+    
 
     public void limparTabela(List<Producao> producoes) {
         while (frm.tmProducao.getRowCount() > 0) {
@@ -274,4 +278,22 @@ public class ProducaoActionControl implements ControlInterface, ActionListener {
             desabilitarCampoDoFrm();
         }
     }
+    
+    public void tbProducaoLinhaSelecionada(JTable tb) {
+        if (tb.getSelectedRow() != -1) {
+            frm.getLabelId().setText(String.valueOf(producoes.get(tb.getSelectedRow()).getId()));
+            frm.getBoxProfissional().setSelectedItem(producoes.get(tb.getSelectedRow()).getFuncionario_nome());
+            frm.getBoxPrestador().setSelectedItem(producoes.get(tb.getSelectedRow()).getPrestador_nome());
+            frm.getBoxProcedimento().setSelectedItem(producoes.get(tb.getSelectedRow()).getProcedimento_nome());
+            frm.getjDateChooserDataEntrada().setDate(producoes.get(tb.getSelectedRow()).getData_entrada());
+            frm.getjDateChooserDataDigitacao().setDate(producoes.get(tb.getSelectedRow()).getData_digitacao());
+            frm.getFtxtQuantidade().setText(String.valueOf(producoes.get(tb.getSelectedRow()).getQuantidade()));
+        } else {
+            frm.getLabelId().setText("");
+            frm.getjDateChooserDataDigitacao().setDate(null);
+            frm.getjDateChooserDataEntrada().setDate(null);
+            frm.getFtxtQuantidade().setText("");
+        }
+    }
+    
 }

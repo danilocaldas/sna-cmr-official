@@ -78,7 +78,7 @@ public class ProducaoImplements implements ProducaoController {
     }
 
     @Override
-    public List<Producao> producao(Date data_digitacao, String nome_profissional) {
+    public List<Producao> ListarProducao(Date data_digitacao, String nome_profissional) {
         List<Producao> producoes = new ArrayList<Producao>();
         int index = 0;
         try {
@@ -101,5 +101,29 @@ public class ProducaoImplements implements ProducaoController {
             Logger.getLogger(ProducaoImplements.class.getName()).log(Level.SEVERE, null, ex);
         }
         return producoes;
+    }
+
+    @Override
+    public List<Producao> listProducao() {
+        List<Producao> producao = new ArrayList<Producao>();
+        try {
+            pstmt = bdConnection.conectar().prepareStatement(query.listaProducao);
+            rset = pstmt.executeQuery();
+            Producao pro2;
+            while (rset.next()){
+                pro2 = new Producao();
+                pro2.setId(rset.getLong("id"));
+                pro2.setFuncionario_nome(rset.getString("funcionario_nome"));
+                pro2.setPrestador_nome(rset.getString("prestador_nome"));
+                pro2.setProcedimento_nome(rset.getString("procedimento_nome"));
+                pro2.setData_entrada(rset.getDate("data_entrada"));
+                pro2.setData_digitacao(rset.getDate("data_digitacao"));
+                pro2.setQuantidade(rset.getInt("quantidade"));
+                producao.add(pro2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProducaoImplements.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return producao;
     }
 }
