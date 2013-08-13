@@ -17,10 +17,11 @@ public interface ProducaoController {
     
     /**
      * 
-     * @param producao Crud da producao
+     * @param ListarProducao Crud da ListarProducao
      */
     public void save(Producao producao);
     public void update(Producao producao);
     public void delete(Producao producao);
-    public List<Producao> producao(Date data_digitacao, String nome_profissional);
+    public List<Producao> ListarProducao(Date data_digitacao, String nome_profissional);
+    public List<Producao> listProducao();
 }
