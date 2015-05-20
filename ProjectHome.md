@@ -1,0 +1,1 @@
+Auxiliar nas rotinas administrativas do núcleo, contabilizar produção e organizar arquivo médico.
